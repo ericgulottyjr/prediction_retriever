@@ -6,15 +6,24 @@ from datetime import datetime
 
 def start_download():
     result_label.config(text="Downloading...")
+    
+    # Retrieve the dates from the Calendar widgets and convert to datetime objects
+    start_date_str = start_date_cal.get_date()
+    end_date_str = end_date_cal.get_date()
+    start_date = datetime.strptime(start_date_str, '%Y/%m/%d')
+    end_date = datetime.strptime(end_date_str, '%Y/%m/%d')
+    
     download_files(
-        start_date_cal.get_date().strftime('%Y/%m/%d'),
-        end_date_cal.get_date().strftime('%Y/%m/%d'),
+        start_date.strftime('%Y/%m/%d'),
+        end_date.strftime('%Y/%m/%d'),
         minute_increment_entry.get(),
         seconds_var.get()
     )
+    
     result_label.config(text="Download completed.")
 
 root = tk.Tk()
+root.geometry("300x460")
 root.title("Predictions Retriever")
 
 style = ttk.Style(root)
@@ -46,7 +55,7 @@ minute_increment_entry.pack()
 seconds_label = tk.Label(root, text="Second Increment:")
 seconds_label.pack()
 
-seconds_options = [str(i) for i in range(0, 61, 10)]
+seconds_options = [str(i) for i in range(0, 31, 10)]
 seconds_var = tk.StringVar(value=seconds_options[0])
 seconds_menu = tk.OptionMenu(root, seconds_var, *seconds_options)
 seconds_menu.pack()
