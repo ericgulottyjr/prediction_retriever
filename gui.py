@@ -23,14 +23,15 @@ def start_download():
     result_label.config(text="Download completed.")
 
 root = tk.Tk()
-root.geometry("300x460")
+root.geometry("300x480")
 root.title("Predictions Retriever")
 
 style = ttk.Style(root)
 style.theme_use('clam')
 
-date_range_label = tk.Label(root, text="Select Date Range:")
-date_range_label.pack()
+# Label for start date selection
+start_date_label = tk.Label(root, text="Choose Start Date:")
+start_date_label.pack()
 
 # Initialize the calendar to the current date
 current_date = datetime.now().date()
@@ -39,6 +40,10 @@ start_date_cal = Calendar(root, selectmode='day', date_pattern='yyyy/mm/dd',
                           borderwidth=0.5, background='b'
                           )
 start_date_cal.pack()
+
+# Label for end date selection
+end_date_label = tk.Label(root, text="Choose End Date:")
+end_date_label.pack()
 
 end_date_cal = Calendar(root, selectmode='day', date_pattern='yyyy/mm/dd', 
                         year=current_date.year, month=current_date.month, day=current_date.day,
