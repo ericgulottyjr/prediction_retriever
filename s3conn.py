@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 # Initialize the S3 client
 s3_client = boto3.client('s3')
 
-# Specify your bucket name
+# Specify 
 bucket_name = 'mbta-gtfs-s3'
 
 # Define a function to list objects under a specific prefix using Boto3's Paginator
@@ -45,7 +45,6 @@ def download_files(start_date_str, end_date_str, minute_increment_str, second_in
                     # Compare only up to the minute level
                     hh_mm_ss = f"{hour:02d}:{minute:02d}"
                     
-                    # Rest of the code remains the same
                     for obj in objects:
                         file_key = obj['Key']
                         
@@ -66,7 +65,6 @@ def download_files(start_date_str, end_date_str, minute_increment_str, second_in
                     for second in range(0, 60, second_increment):
                         hh_mm_ss = f"{hour:02d}:{minute:02d}:{second:02d}"
 
-                        # Rest of the code remains the same
                         for obj in objects:
                             file_key = obj['Key']
                             
