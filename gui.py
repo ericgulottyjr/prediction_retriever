@@ -23,7 +23,7 @@ def start_download():
     result_label.config(text="Download completed.")
 
 root = tk.Tk()
-root.geometry("300x480")
+root.geometry("300x500")
 root.title("Predictions Retriever")
 
 style = ttk.Style(root)
@@ -37,7 +37,7 @@ start_date_label.pack()
 current_date = datetime.now().date()
 start_date_cal = Calendar(root, selectmode='day', date_pattern='yyyy/mm/dd', 
                           year=current_date.year, month=current_date.month, day=current_date.day,
-                          borderwidth=0.5, background='b'
+                          borderwidth=0.5
                           )
 start_date_cal.pack()
 
@@ -47,7 +47,7 @@ end_date_label.pack()
 
 end_date_cal = Calendar(root, selectmode='day', date_pattern='yyyy/mm/dd', 
                         year=current_date.year, month=current_date.month, day=current_date.day,
-                        borderwidth=0.5, background='b'
+                        borderwidth=0.5
                         )
 end_date_cal.pack()
 
