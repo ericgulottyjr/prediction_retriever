@@ -17,8 +17,6 @@ def list_objects_with_prefix(prefix):
         objects.extend(page.get('Contents', []))
     return objects
 
-from datetime import datetime, timedelta
-
 def download_files(start_date_str, end_date_str, minute_increment_str, second_increment_str):
     start_date = datetime.strptime(start_date_str, '%Y/%m/%d')
     end_date = datetime.strptime(end_date_str, '%Y/%m/%d')
