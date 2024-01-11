@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import json
 import gzip
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Specify the base directory
 base_directory = 'temp'
@@ -44,6 +44,8 @@ for year in os.listdir(base_directory):
                                                             stop_id = stop_update['stop_id']
                                                             if stop_id in stop_list:
                                                                 departure_time = stop_update['departure']['time']
+                                                                # Convert departure_time to GMT (optional GMT-5)
+                                                                departure_time = pd.to_datetime(departure_time, unit='s') #- timedelta(hours=5)
                                                                 current_time = file_name.split('_')[0].split('T')[1].replace('Z','').replace('/', ':')
                                                                 datetime_str = f"{year}-{month}-{day} {current_time}"
                                                                 datetime_obj = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
