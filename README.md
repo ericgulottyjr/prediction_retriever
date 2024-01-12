@@ -3,6 +3,7 @@ Allows for the batch download of GTFS-realtime files from the `mbta-gtfs-s3` buc
 
 ## Setup
 Must have the `boto3` Python library installed locally with active AWS keys.
+
 Download repo, `cd` to folder and use `python3 script_name.py` command to open either `gui.py` or `commandLine.py`.
 
 ## Usage
