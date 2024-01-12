@@ -28,7 +28,7 @@ def start_download():
     # Call parse function if stop IDs are entered and the parse option is selected
     if parse_var.get() and entered_stop_ids:
         parse.parse_stops(entered_stop_ids)
-        result_label.config(text="Download and parse complete.")
+        result_label.config(text="Download/parse complete.")
     else:
         result_label.config(text="Download complete.")
 
