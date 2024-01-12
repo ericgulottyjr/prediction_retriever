@@ -25,11 +25,12 @@ def start_download():
         seconds_var.get()
     )
 
-    # Call parse function if stop IDs are entered
+    # Call parse function if stop IDs are entered and the parse option is selected
     if parse_var.get() and entered_stop_ids:
         parse.parse_stops(entered_stop_ids)
-    
-    result_label.config(text="Download completed.")
+        result_label.config(text="Download and parse complete.")
+    else:
+        result_label.config(text="Download complete.")
 
 def save_stop_ids():
     global entered_stop_ids
