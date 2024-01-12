@@ -38,22 +38,26 @@ def parse_stops(stops, base_directory = 'temp'):
                                                                 stop_id = stop_update['stop_id']
                                                                 if stop_id in stops:
                                                                     departure_time = stop_update['departure']['time']
-                                                                    # Convert departure_time to GMT (optional GMT-5)
-                                                                    departure_time = pd.to_datetime(departure_time, unit='s') #- timedelta(hours=5)
-                                                                    current_time = file_name.split('_')[0].split('T')[1].replace('Z','').replace('/', ':')
-                                                                    datetime_str = f"{year}-{month}-{day} {current_time}"
+                                                                    # Convert departure_time to GMT
+                                                                    departure_time = pd.to_datetime(departure_time, unit='s')
+                                                                    file_time = file_name.split('_')[0].split('T')[1].replace('Z','').replace('/', ':')
+                                                                    datetime_str = f"{year}-{month}-{day} {file_time}"
                                                                     datetime_obj = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
+                                                                    current_time = datetime_obj - timedelta(hours=5)
+                                                                    departure_time_adj = departure_time - timedelta(hours=5)
 
                                                                     # Initialize DataFrames and append rows based on the extracted data
                                                                     dataframe_name = f"{year}{month}{day}"
                                                                     if dataframe_name not in dataframes:
-                                                                        dataframes[dataframe_name] = pd.DataFrame(columns=['id', 'stop_id', 'current_time', 'departure_time'])
+                                                                        dataframes[dataframe_name] = pd.DataFrame(columns=['id', 'stop_id', 'file_timestamp', 'current_time', 'departure_time', 'departure_time_adj'])
                                                                     dataframes[dataframe_name] = pd.concat([
                                                                         dataframes[dataframe_name],
                                                                         pd.DataFrame({'id': [entity['id']],
                                                                                     'stop_id': [stop_id],
-                                                                                    'current_time': [datetime_obj],
-                                                                                    'departure_time': [departure_time]})],
+                                                                                    'file_timestamp': [datetime_obj],
+                                                                                    'current_time': [current_time],
+                                                                                    'departure_time': [departure_time],
+                                                                                    'departure_time_adj': [departure_time_adj]})],
                                                                         ignore_index=True
                                                                     )
 
