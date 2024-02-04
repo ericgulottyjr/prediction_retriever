@@ -17,7 +17,7 @@ def list_objects_with_prefix(prefix):
         objects.extend(page.get('Contents', []))
     return objects
 
-def download_files(start_date_str, end_date_str, minute_increment_str, second_increment_str):
+def download_files(start_date_str, end_date_str, minute_increment_str, second_increment_str, file_type):
     start_date = datetime.strptime(start_date_str, '%Y/%m/%d')
     end_date = datetime.strptime(end_date_str, '%Y/%m/%d')
     
@@ -46,7 +46,7 @@ def download_files(start_date_str, end_date_str, minute_increment_str, second_in
                     for obj in objects:
                         file_key = obj['Key']
                         
-                        if 'realtime_TripUpdates_enhanced' in file_key and hh_mm_ss == file_key.split('_')[0][-9:-4]:
+                        if (file_type in file_key) and (hh_mm_ss == file_key.split('_')[0][-9:-4]):
                             print(f"Found: {file_key}")
                             
                             target_dir = os.path.join('temp', prefix)
@@ -66,7 +66,7 @@ def download_files(start_date_str, end_date_str, minute_increment_str, second_in
                         for obj in objects:
                             file_key = obj['Key']
                             
-                            if 'realtime_TripUpdates_enhanced' in file_key and hh_mm_ss == file_key.split('_')[0][-9:-2]+'0':
+                            if (file_type in file_key) and (hh_mm_ss == file_key.split('_')[0][-9:-2]+'0'):
                                 print(f"Found: {file_key}")
 
                                 target_dir = os.path.join('temp', prefix)
