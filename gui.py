@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkcalendar import Calendar
 from s3conn import download_files
 from datetime import datetime
-import parse
+import parse_TU, parse_VP
 
 # Global variable to store stop IDs
 entered_stop_ids = []
@@ -28,6 +28,12 @@ def start_download():
     if not selected_types:
         result_label.config(text="Please select at least one file type to download.")
     else:
+        # Call parse function if stop IDs are entered and the parse option is selected
+        if parse_var.get() and entered_stop_ids:
+            result_label.config(text="Downloading and Parsing...")
+        else:
+            result_label.config(text="Downloading...")
+
         for file_type in selected_types:
             download_files(
                 start_date.strftime('%Y/%m/%d'),
@@ -37,12 +43,15 @@ def start_download():
                 file_type  # Pass the selected file type to s3conn.py
             )
 
-        # Call parse function if stop IDs are entered and the parse option is selected
         if parse_var.get() and entered_stop_ids:
-            parse.parse_stops(entered_stop_ids)
+            if 'realtime_TripUpdates_enhanced' in selected_types:
+                parse_TU.parse_trip_updates(entered_stop_ids)
+            if 'realtime_VehiclePositions_enhanced' in selected_types:
+                parse_VP.parse_vehicle_positions(entered_stop_ids)
             result_label.config(text="Download/parse complete.")
         else:
             result_label.config(text="Download complete.")
+
 
 def save_stop_ids():
     global entered_stop_ids
