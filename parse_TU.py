@@ -4,7 +4,7 @@ import json
 import gzip
 from datetime import datetime, timedelta
 
-def parse_stops(stops, base_directory = 'temp'): 
+def parse_trip_updates(stops, base_directory = 'temp'): 
     # Initialize the dataframes dictionary to store DataFrames for each date
     dataframes = {}
 
@@ -69,8 +69,8 @@ def parse_stops(stops, base_directory = 'temp'):
         df.to_csv(csv_file_path, index=False)
         print(f"Saved DataFrame {dataframe_name} to {csv_file_path}")
 
-    # Print the content of each DataFrame for verification
-    for dataframe_name, df in dataframes.items():
-        print(f"DataFrame for {dataframe_name}:")
-        print(df)
-        print()
+    # Print the content of each DataFrame for verification (tempoarily commented out)
+    #for dataframe_name, df in dataframes.items():
+        #print(f"DataFrame for {dataframe_name}:")
+        #print(df)
+        #print()
