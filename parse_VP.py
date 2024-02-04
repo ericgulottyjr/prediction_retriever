@@ -57,8 +57,3 @@ def parse_vehicle_positions(stop_ids, base_directory='temp', output_directory='t
             json.dump(entries, json_file, default=str, indent=4)
 
     print(f"Aggregated data saved to {output_directory}")
-
-if __name__ == "__main__":
-    # Example stop_ids list, replace with your actual list of stop_ids
-    stop_ids = ['70106', '70107', '70237', '70238', '70160', '70161', '70503', '70504', '70511', '70512', '70174', '70175']
-    parse_vehicle_positions(stop_ids)
