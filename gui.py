@@ -17,20 +17,32 @@ def start_download():
     start_date = datetime.strptime(start_date_str, '%Y/%m/%d')
     end_date = datetime.strptime(end_date_str, '%Y/%m/%d')
     
-    # Call download function
-    download_files(
-        start_date.strftime('%Y/%m/%d'),
-        end_date.strftime('%Y/%m/%d'),
-        minute_increment_entry.get(),
-        seconds_var.get()
-    )
+    # Call download function with user selections
+    selected_types = []
+    if trip_updates_var.get():
+        selected_types.append('realtime_TripUpdates_enhanced')
+    if vehicle_positions_var.get():
+        selected_types.append('realtime_VehiclePositions_enhanced')
 
-    # Call parse function if stop IDs are entered and the parse option is selected
-    if parse_var.get() and entered_stop_ids:
-        parse.parse_stops(entered_stop_ids)
-        result_label.config(text="Download/parse complete.")
+    # Ensure at least one type is selected before proceeding
+    if not selected_types:
+        result_label.config(text="Please select at least one file type to download.")
     else:
-        result_label.config(text="Download complete.")
+        for file_type in selected_types:
+            download_files(
+                start_date.strftime('%Y/%m/%d'),
+                end_date.strftime('%Y/%m/%d'),
+                minute_increment_entry.get(),
+                seconds_var.get(),
+                file_type  # Pass the selected file type to s3conn.py
+            )
+
+        # Call parse function if stop IDs are entered and the parse option is selected
+        if parse_var.get() and entered_stop_ids:
+            parse.parse_stops(entered_stop_ids)
+            result_label.config(text="Download/parse complete.")
+        else:
+            result_label.config(text="Download complete.")
 
 def save_stop_ids():
     global entered_stop_ids
@@ -72,6 +84,16 @@ end_date_label = tk.Label(root, text="Choose End Date:")
 end_date_label.pack()
 end_date_cal = Calendar(root, selectmode='day', date_pattern='yyyy/mm/dd', year=current_date.year, month=current_date.month, day=current_date.day)
 end_date_cal.pack()
+
+# Checkbox variables to track user selections
+trip_updates_var = tk.BooleanVar()
+vehicle_positions_var = tk.BooleanVar()
+
+# Checkbox widgets for 'realtime TripUpdates' and 'realtime VehiclePositions'
+trip_updates_checkbox = tk.Checkbutton(root, text="Download realtime TripUpdates", variable=trip_updates_var)
+vehicle_positions_checkbox = tk.Checkbutton(root, text="Download realtime VehiclePositions", variable=vehicle_positions_var)
+trip_updates_checkbox.pack()
+vehicle_positions_checkbox.pack()
 
 # Minute Increment Input
 minute_increment_label = tk.Label(root, text="Minute Increment:")
