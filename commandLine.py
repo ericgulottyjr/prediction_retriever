@@ -1,6 +1,6 @@
 from datetime import datetime
 from s3conn import download_files
-import parse
+import parse_TU
 
 def main():
     # Parse the initial input
@@ -36,7 +36,7 @@ def main():
     if parse_input == 'y':
         stop_ids_input = input("Enter a list of comma-separated stop_ids: ")
         stop_ids = [id.strip() for id in stop_ids_input.split(',')]
-        parse.parse_stops(stop_ids)
+        parse_TU.parse_stops(stop_ids)
     elif parse_input != 'n':
         print("Invalid input. Please enter 'y' for yes or 'n' for no.")
 
